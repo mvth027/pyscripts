@@ -1,0 +1,17 @@
+command1 = 'switchport trunk allowed vlan 1,3,10,20,30,100'
+command2 = 'switchport trunk allowed vlan 1,3,100,200,300'
+
+command1_new = command1.strip().split()
+command1_new = command1_new[-1].split(",")
+
+command2_new = command2.strip().split()
+command2_new = command2_new[-1].split(",")
+
+
+set1 = set(command1_new)
+set2 = set(command2_new)
+
+result = set1 & set2
+
+
+print(result)
