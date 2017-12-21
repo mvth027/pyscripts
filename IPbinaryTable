@@ -1,0 +1,15 @@
+IP = '192.168.3.1'
+IP = IP.split(".")
+intIP = []
+for i in IP:
+  intIP.append(int(i))
+binary = [bin(intIP[0]),bin(intIP[1]),bin(intIP[2]),bin(intIP[3])]
+
+xbinary = []
+for x in binary:
+  xbinary.append(x.replace("0b",""))
+
+
+
+print ("%s  %s  %s  %s" % (str(intIP[0]).ljust(10),str(intIP[1]).ljust(10),str(intIP[2]).ljust(10),str(intIP[3]).ljust(10)))
+print ("%s  %s  %s  %s" % (str(xbinary[0]).rjust(10,"0"),str(xbinary[1]).rjust(10,"0"),str(xbinary[2]).rjust(10,"0"),str(xbinary[3]).rjust(10,"0")))
