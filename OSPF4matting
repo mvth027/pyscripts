@@ -1,0 +1,11 @@
+ospf_route = 'O        10.0.24.0/24 [110/41] via 10.0.13.3, 3d18h, FastEthernet0/0'
+
+template = ospf_route.strip().split()
+if template[0] == "O":
+  template[0] = "OSPF"
+else:
+  pass
+template[2] = template[2].replace("[","")
+template[2] = template[2].replace("]","")
+
+print ("Protocol:    %s\nPrefix:      %s\nAD/Metric:   %s\nNext-Hop:    %s\nLast update:    %s\nOutbound Interface    %s\n" % (template[0],template[1],template[2],template[4],template[5],template[6]))
