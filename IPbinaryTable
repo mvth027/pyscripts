@@ -1,29 +1,35 @@
-IP = input("Enter CIDR IP: ")
-IP = IP.split("/")
 mask = 0
-if int(IP[1]) in range (1,32):
-  mask = int(IP[1])
-else:
-  pass
-  
-IP = IP[0].split(".")
-
 intIP = []
+#IP = input("Enter CIDR IP: ")
+IP = "192.168.1.1/24"
+IP = IP.split("/")
 try:
+  if int(IP[1]) in range (1,32):
+    mask = IP[1]
+  else:
+    pass
+  
+  IP = IP[0].split(".")
+
+  bitmask = "1" * int(mask)
+  bitmask = bitmask.ljust(32,"0")
+  bitmask = [bitmask[0:8],bitmask[8:16],bitmask[16:24],bitmask[24:32]]
+
   for i in IP:
     if int(i) < 256:
       intIP.append(int(i))
     else:
       pass
-  binary = [bin(intIP[0]),bin(intIP[1]),bin(intIP[2]),bin(intIP[3])]
-  xbinary = []
-  for x in binary:
-    xbinary.append(x.replace("0b",""))
+  IPbinary = ["{0:b}".format(intIP[0]),"{0:b}".format(intIP[1]),"{0:b}".format(intIP[2]),"{0:b}".format(intIP[3])]
+
+
   print ("Network:")
-  print ("%s  %s  %s  %s" % (str(intIP[0]).ljust(10),str(intIP[1]).ljust(10),str(intIP[2]).ljust(10),str(intIP[3]).ljust(10)))
-  print ("%s  %s  %s  %s\n" % (str(xbinary[0]).rjust(10,"0"),str(xbinary[1]).rjust(10,"0"),str(xbinary[2]).rjust(10,"0"),str(xbinary[3]).rjust(10,"0")))
+  print ("%s  %s  %s  %s" % (str(intIP[0]).ljust(8),str(intIP[1]).ljust(8),str(intIP[2]).ljust(8),str(intIP[3]).ljust(8)))
+  print ("%s  %s  %s  %s\n" % (str(IPbinary[0]).rjust(8,"0"),str(IPbinary[1]).rjust(8,"0"),str(IPbinary[2]).rjust(8,"0"),str(IPbinary[3]).rjust(8,"0")))
   print ("Mask:")
-  print (mask)
+  print ("/%s" % mask)
+  print (str(int(bitmask[0],2)).ljust(8)+"  "+str(int(bitmask[1],2)).ljust(8)+"  "+str(int(bitmask[2],2)).ljust(8)+"  "+str(int(bitmask[3],2)).ljust(8))
+  print ("%s  %s  %s  %s" % (bitmask[0],bitmask[1],bitmask[2],bitmask[3]))
 
 except ValueError:
   print ("Incorrect IP. Check your input and try again")
