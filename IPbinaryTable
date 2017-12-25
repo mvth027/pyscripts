@@ -1,7 +1,8 @@
 mask = 0
 intIP = []
+bitIP = []
 #IP = input("Enter CIDR IP: ")
-IP = "192.168.1.1/24"
+IP = "87.78.20.86/30"
 IP = IP.split("/")
 try:
   if int(IP[1]) in range (1,32):
@@ -21,15 +22,20 @@ try:
     else:
       pass
   IPbinary = ["{0:b}".format(intIP[0]),"{0:b}".format(intIP[1]),"{0:b}".format(intIP[2]),"{0:b}".format(intIP[3])]
-
-
+  
+  networkCalc = [int(bin(intIP[0]),2) & int(bin(int(bitmask[0],2)),2),int(bin(intIP[1]),2) & int(bin(int(bitmask[1],2)),2),int(bin(intIP[2]),2) & int(bin(int(bitmask[2],2)),2),int(bin(intIP[3]),2) & int(bin(int(bitmask[3],2)),2) ]
+  wildCardMask = [255 - int(bitmask[0],2),255 - int(bitmask[1],2),255 - int(bitmask[2],2),255 - int(bitmask[3],2)]
+  wildCardMaskBin = [bin(int(x)) for x in wildCardMask]
+  broadcastCalc = [abs(wildCardMask[0] + networkCalc[0]),abs(wildCardMask[1] + networkCalc[1]),abs(wildCardMask[2] + networkCalc[2]),abs(wildCardMask[3] + networkCalc[3])]
+  
   print ("Network:")
-  print ("%s  %s  %s  %s" % (str(intIP[0]).ljust(8),str(intIP[1]).ljust(8),str(intIP[2]).ljust(8),str(intIP[3]).ljust(8)))
+  print ("%s  %s  %s  %s" % (str(networkCalc[0]).ljust(8),str(networkCalc[1]).ljust(8),str(networkCalc[2]).ljust(8),str(networkCalc[3]).ljust(8)))
   print ("%s  %s  %s  %s\n" % (str(IPbinary[0]).rjust(8,"0"),str(IPbinary[1]).rjust(8,"0"),str(IPbinary[2]).rjust(8,"0"),str(IPbinary[3]).rjust(8,"0")))
   print ("Mask:")
   print ("/%s" % mask)
   print (str(int(bitmask[0],2)).ljust(8)+"  "+str(int(bitmask[1],2)).ljust(8)+"  "+str(int(bitmask[2],2)).ljust(8)+"  "+str(int(bitmask[3],2)).ljust(8))
-  print ("%s  %s  %s  %s" % (bitmask[0],bitmask[1],bitmask[2],bitmask[3]))
+  print ("%s  %s  %s  %s\n" % (bitmask[0],bitmask[1],bitmask[2],bitmask[3]))
+  print ("First Host: " + str(networkCalc[0]) + "." + str(networkCalc[1]) + "." + str(networkCalc[2]) + "." + str(networkCalc[3]+1))
 
 except ValueError:
   print ("Incorrect IP. Check your input and try again")
