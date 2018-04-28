@@ -1,0 +1,33 @@
+access_template = ['switchport mode access',
+                   'switchport access vlan ',
+                   'switchport nonegotiate',
+                   'spanning-tree portfast',
+                   'spanning-tree bpduguard enable']
+
+trunk_template = ['switchport trunk encapsulation dot1q',
+                  'switchport mode trunk',
+                  'switchport trunk allowed vlan ']
+
+if_mode = input("Enter interface mode (access/trunk): ")
+if_num = input("Enter interface type and number: ")
+if_vlan = input("Enter vlan(s): ")
+
+if if_mode == "access":
+  
+  print ("interface " + if_num)
+  print (access_template[0])
+  print (access_template[1] + if_vlan)
+  print (access_template[2])
+  print (access_template[3])
+  print (access_template[4])
+
+elif if_mode == "trunk":
+  
+  print ("interface " + if_num)
+  print (trunk_template[0])
+  print (trunk_template[1])
+  print (trunk_template[2] + if_vlan)
+
+else:
+  print ("Wrong interface type")
+
