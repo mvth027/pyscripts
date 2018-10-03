@@ -1,7 +1,6 @@
 import re
 
 dhcpPool = '''
-
 ip dhcp pool HEX_WIFI.KIROV.KB.HLYNOV.Urickogo40
  vrf HEX-WIFI
  network 100.68.3.0 255.255.255.224
@@ -20,7 +19,6 @@ ip dhcp pool HEX_WIFI.KIROV.KB.HLYNOV.Oktyabskiy155
  dns-server 213.87.2.88 213.87.2.89 
  default-router 100.68.3.65 
  lease 0 0 8
-
 '''
 
 interfaces = '''
@@ -38,60 +36,27 @@ Port-channel1.15201704 100.68.2.1      YES NVRAM  up                    up
 Port-channel1.15201712 100.68.2.225    YES manual up                    up      
 Port-channel1.15201716 100.68.2.129    YES NVRAM  up                    up      
 Port-channel1.15203495 100.68.2.193    YES manual up                    up
-
 '''
-
-
-
 
 poolNameFind = ('ip dhcp pool (\S+)')
 networkFind = ('network \w+.\w+.\w+.\w+ \w+.\w+.\w+.\w+')
-defaultRouterFind = ('default-router \w+.\w+.\w+.\w+')
-
-
+defaultRouterFind = ('default-router (\w+.\w+.\w+.\w+)')
+portChannelFind = ('Port-channel1.\d+')
+IPinterfacesFind = ('100.\d+.\d+.\d+')
 poolName = re.findall(poolNameFind, dhcpPool)
 network = re.findall(networkFind, dhcpPool)
 defaultRouter = re.findall(defaultRouterFind, dhcpPool)
-
-output = dict(zip(poolName,network))
-
-#for key, value in output.items():
-#        print(key, value)
-        
-
+portChannel = re.findall(portChannelFind, interfaces)
+IPinterface = re.findall(IPinterfacesFind, interfaces)
+intDict = dict(zip(IPinterface,portChannel,))
 try:   
  i = 0
  while i <= len(poolName):
      print (str(poolName[i]))
      print (str(network[i]))
-     print (str(defaultRouter[i]))
+     print ("default-router " + str(defaultRouter[i]))
+     print (str(intDict[defaultRouter[i]]))
      print ("")
      i += 1
 except IndexError:
     print ('')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#print (dhcpPool)
