@@ -1,0 +1,16 @@
+start_vlan = 100
+end_vlan = 110
+vlan_list = []
+for i in range (start_vlan,end_vlan):
+  vlan_list.append(i)
+
+#print (vlan_list) 
+
+
+for vlan in vlan_list:
+  print ("interface GigabitEthernet0/2/0/2."+ str(vlan)+ " l2transport\n"
+  "description HN-kovaliha-ring2-VLAN"+ str(vlan) + "\n"
+  "encapsulation dot1q " + str(vlan) + "\n"
+  "rewrite ingress tag pop 1 symmetric"+"\n"
+  ""
+  )
