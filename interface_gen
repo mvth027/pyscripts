@@ -1,16 +1,30 @@
-start_vlan = 3220
-end_vlan = 3239
-eee = end_vlan + 1
-vlan_list = []
-for i in range (start_vlan,eee):
-  vlan_list.append(i)
-
-
-for vlan in vlan_list:
-  print ("interface GigabitEthernet0/2/0/2."+ str(vlan)+ " l2transport\n"
-  " description HN-kovaliha-ring2-VLAN"+ str(vlan) + "\n"
+def inetrface_gen(inter,rng,sv,ev):
+  start_vlan = sv
+  end_vlan = ev
+  ring = rng
+  interface = inter
+  eee = end_vlan + 1
+  vlan_list = []
+  print ("interface "+str(interface)+".381 l2transport" + "\n"
+  " description HN-Usilova-"+str(ring)+"-VLAN381" + "\n"
+  " encapsulation dot1q 381"+"\n"
+  " rewrite ingress tag pop 1 symmetric"+"\n"
+  "!"
+  )
+  print ("interface "+str(interface)+".1100 l2transport"  + "\n"
+  " description HN-Usilova-"+str(ring)+"-VLAN1100" + "\n"
+  " encapsulation dot1q 1100" + "\n"
+  " rewrite ingress tag pop 1 symmetric"+"\n"
+  "!"
+  )
+  for i in range (start_vlan,eee):
+    vlan_list.append(i)
+  for vlan in vlan_list:
+    print ("interface "+str(interface)+"." + str(vlan)+ " l2transport" + "\n"
+  " description HN-Usilova-"+str(ring)+"-VLAN"+ str(vlan) + "\n"
   " encapsulation dot1q " + str(vlan) + "\n"
   " rewrite ingress tag pop 1 symmetric"+"\n"
   "!"
   )
 
+inetrface_gen("GigabitEthernet0/3/0/15","ring9",3105,3119)
