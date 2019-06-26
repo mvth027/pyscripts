@@ -1,16 +1,30 @@
 import sys
 
-def compare (oc,ot):
+def model(mod):
+  model = open(mod, 'r')
+  template = model.read()
+  if "#               DES-1210-28/ME Fast Ethernet Switch Configuration" in template:
+    return("shablon_DES-1210-28ME")
+  else:
+    return("Error")
+  
+
+def compare(oc,ot):
   open_config = open(oc, 'r')
   config = open_config.read()
   open_template = open(ot, 'r')
   template = open_template.read()
   if template in config:
-    print("Ok")
+    print(str(oc) + " : " + "OK")
   else:
-    print("Not OK")
+    print(str(oc) + " : " + "Not OK")
   open_config.close()
   open_template.close()
 
 
-compare(sys.argv[1],sys.argv[2])
+with open(sys.argv[1]) as file:
+    array = [row.strip() for row in file]
+
+	
+for i in array:
+  compare(i,model(i))
