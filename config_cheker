@@ -5,6 +5,8 @@ def model(mod):
   template = model.read()
   if "#               DES-1210-28/ME Fast Ethernet Switch Configuration" in template:
     return("shablon_DES-1210-28ME")
+  elif "#                       DES-1228/ME Configuration" in template:
+    return("shablon_DES-1228ME")
   else:
     return("Error")
   
@@ -15,9 +17,9 @@ def compare(oc,ot):
   open_template = open(ot, 'r')
   template = open_template.read()
   if template in config:
-    print(str(oc) + " : " + "OK")
+    return(str(oc) + " : " + "OK")
   else:
-    print(str(oc) + " : " + "Not OK")
+    return(str(oc) + " : " + "Not OK")
   open_config.close()
   open_template.close()
 
@@ -27,4 +29,4 @@ with open(sys.argv[1]) as file:
 
 	
 for i in array:
-  compare(i,model(i))
+  print (str(compare(i,model(i))) + " : " + str(model(i)))
