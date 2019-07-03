@@ -14,12 +14,13 @@ def model(mod):
 def compare(oc,ot):
   open_config = open(oc, 'r')
   config = open_config.read()
-  open_template = open(ot, 'r')
-  template = open_template.read()
-  if template in config:
-    return(str(oc) + " : " + "OK")
-  else:
-    return(str(oc) + " : " + "Not OK")
+  with open(ot) as fileOt:
+    arraot = [row.strip() for row in fileOt]
+  for str_ot in arraot:
+    if str_ot in config:
+      return(str(oc) + " : " + "OK")
+    else:
+      return(str(oc) + " : " + "Not OK")
   open_config.close()
   open_template.close()
 
