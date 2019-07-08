@@ -1,0 +1,30 @@
+import sys
+import pexpect
+
+
+def dlink_combainer(ip):
+  switch_ip = ip
+  p = pexpect.spawn('telnet %s' % switch_ip, timeout=10)
+  #p.logfile=sys.stdout
+  p.expect('UserName:')
+  p.sendline('admin')
+  p.expect('PassWord:')
+  p.sendline('admin')
+  p.expect('#')
+  p.sendline('show config current_config')
+  p.sendline('a')
+  p.expect('[1-5]#')
+  out = p.before.decode('utf-8')
+  p.close()
+  f = open('%s' % switch_ip, 'w')
+  f.write(out)
+  f.close()
+  print ('%s OK!' % switch_ip)
+
+
+list = ("10.220.70.2", "10.220.70.3", "10.220.70.4", "10.220.70.8")
+
+for i in list:
+   dlink_combainer(str(i))
+   
+ 
