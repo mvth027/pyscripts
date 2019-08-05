@@ -25,6 +25,6 @@ def dlink_combainer(ip):
 list = ("10.220.70.2", "10.220.70.3", "10.220.70.4", "10.220.70.8")
 
 for i in list:
-   dlink_combainer(str(i))
+  dlink_combainer(str(i))
    
  
